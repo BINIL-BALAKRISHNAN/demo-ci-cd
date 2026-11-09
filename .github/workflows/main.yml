@@ -1,10 +1,7 @@
-```yaml
 name: Java Maven CI CD
 
 on:
-  push:
-    branches:
-      - main
+      
 
   workflow_dispatch:
 
@@ -17,11 +14,9 @@ jobs:
       packages: write
 
     steps:
-      # 1. Download source code
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 2. Install Java 17 and configure Maven authentication
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
@@ -32,11 +27,9 @@ jobs:
           server-username: GITHUB_ACTOR
           server-password: GITHUB_TOKEN
 
-      # 3. Build, test and package Java application
       - name: Build and Test
         run: mvn --batch-mode clean verify
 
-      # 4. Deploy Maven package to GitHub Packages
       - name: Deploy to GitHub Packages
         run: mvn --batch-mode deploy
         env:
